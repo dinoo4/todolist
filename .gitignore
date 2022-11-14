@@ -1,15 +1,1 @@
 node_modules
-
-
-user login/regis
-http://localhost:3000/user/register 
-http://localhost:3000/user/login
-
-
-to do list
-http://localhost:3000/toDoList/createToDo 
-http://localhost:3000/toDoList/getAllToDo 
-http://localhost:3000/toDoList/getToDoById
-http://localhost:3000/toDoList/updateToDoById
-http://localhost:3000/toDoList/deleteToDoById
-http://localhost:3000/toDoList/deleteAllToDo

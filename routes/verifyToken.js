@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
 	else
 		return res.status(401).send({
 			status: false,
-			message: 'You must be logged in to access this resource',
+			message: 'enter the token first',
 			data: null,
 		});
 

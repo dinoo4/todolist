@@ -31,11 +31,9 @@ module.exports = {
 
 	getToDoById: async (req, res) => {
 		try {
-			// const { _id } = req.params.todolist.Id;
-			// const toDo = await Todo.findById({ _id });
-			const toDo = await Todo.findById(req.params._id, '-__v');
+			const { id } = req.params;
+			const toDo = await Todo.findById(id);
 			const data = toDo;
-			console.log(data);
 
 			res.status(200).json({
 				message: 'success get data by id',
@@ -47,9 +45,41 @@ module.exports = {
 		}
 	},
 
-	updateToDoById: (req, res) => {},
+	updateToDoById: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const toDo = await Todo.findById(id);
+			const data = toDo;
 
-	deleteToDoById: (req, res) => {},
+			Object.assign(toDo, req.body);
+			toDo.save();
+			res.status(201).send({
+				message: 'success update todo',
+				data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	},
+
+	deleteToDoById: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const toDo = await Todo.findById(id);
+			const data = toDo;
+
+			if (!toDo) {
+				res.status(404).json({
+					message: 'Could not Found',
+				});
+			} else {
+				toDo.deleteOne();
+				res.json({ message: 'Data Deleted!' });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},
 
 	deleteAllToDo: async (req, res) => {
 		try {
