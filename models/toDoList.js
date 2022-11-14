@@ -5,7 +5,7 @@ const toDoListSchema = new Schema({
 	activity: String,
 	description: String,
 	user: {
-		type: mongoose.ObjectId,
+		type: Object,
 		ref: 'user',
 	},
 });

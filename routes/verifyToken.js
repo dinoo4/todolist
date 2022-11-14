@@ -3,15 +3,21 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const verifyToken = (req, res, next) => {
-	const token = req.header('auth-token');
-	if (!token) return;
-	res.status(400).json({
-		message: 'Access Denied',
-	});
+	const authHeader = req.get('Authorization');
+	let token = '';
+
+	if (authHeader && authHeader.startsWith('Bearer'))
+		token = authHeader.split(' ')[1];
+	else
+		return res.status(401).send({
+			status: false,
+			message: 'You must be logged in to access this resource',
+			data: null,
+		});
 
 	try {
 		const verified = jwt.verify(token, process.env.KEY);
-		req.user = verified.email;
+		req.user = verified;
 		next();
 	} catch (err) {
 		res.status(400).json({
@@ -20,4 +26,4 @@ const verifyToken = (req, res, next) => {
 	}
 };
 
-module.exports = verifyToken;
+module.exports = { verifyToken };
